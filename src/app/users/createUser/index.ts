@@ -3,23 +3,16 @@ import UsersRepository from '@infra/database/repositories/UsersRepository'
 import AppError, { ErrorType } from '@infra/AppError'
 import Passwords from '@infra/Passwords'
 
-const createUser = async (dto: ICreateUserDTO) => {
+const createUser = async (data: ICreateUserDTO) => {
   const repository = new UsersRepository()
-  const { name, email, phoneNumber, password } = dto
-  const existentUser = await repository.findByEmail(email)
+  const existentUser = await repository.findByEmail(data.email)
 
   if (existentUser) {
     throw new AppError(ErrorType.EmailInUseException)
   }
 
-  const hashedPassword = await Passwords.hash(password)
-
-  const newUser = await repository.bootstrap({
-    name,
-    email,
-    phoneNumber,
-    password: hashedPassword
-  })
+  const password = await Passwords.hash(data.password)
+  const newUser = await repository.bootstrap({ ...data, password })
 
   return { ...newUser, password: undefined }
 }
