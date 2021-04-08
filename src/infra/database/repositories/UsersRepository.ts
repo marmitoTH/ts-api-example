@@ -26,7 +26,9 @@ class UsersRepository {
   }
 
   async findByID(id: string) {
-    return await this.repository.findOne({ where: { id } })
+    return await this.repository
+      .findOne({ where: { id } })
+      .catch(() => undefined)
   }
 
   async findByEmail(email: string) {
