@@ -2,8 +2,8 @@ import { ErrorRequestHandler } from 'express'
 import AppError, { ErrorType } from '@infra/AppError'
 import Logger from '@infra/Logger'
 
-const getStatusCode = (errorType: ErrorType) => {
-  switch (errorType) {
+const getStatusCode = (errorID: number) => {
+  switch (errorID) {
     case ErrorType.EmailInUseException:
       return 400
     case ErrorType.UserNotFoundException:
@@ -19,9 +19,10 @@ const errorHandler: ErrorRequestHandler = (error, request, response, next) => {
   Logger.info(error)
 
   if (error instanceof AppError) {
-    const message = error.type
-    const status = getStatusCode(error.type)
-    return response.status(status).json({ message })
+    const status = getStatusCode(error.id)
+    return response.status(status).json({
+      error: { type: error.type, message: error.message }
+    })
   }
 
   return response.status(500).json({ message: 'Internal server error' })
