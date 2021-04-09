@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "UnknownErrorException": "Unknown error found.",
+    "EmailInUseException": "The given email is already in use.",
+    "UserNotFoundException": "No registers has being found for this user."
+  }
+}
