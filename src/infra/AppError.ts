@@ -1,14 +1,20 @@
+import i18n from '@interface/i18n'
+
 export enum ErrorType {
-  UnknownErrorException = 'Unknown error exception',
-  EmailInUseException = 'Email is already in use',
-  UserNotFoundException = 'User not found'
+  UnknownErrorException,
+  EmailInUseException,
+  UserNotFoundException
 }
 
 class AppError {
-  readonly type: ErrorType
+  readonly id: number
+  readonly type: string
+  readonly message: string
 
   constructor(type: ErrorType) {
-    this.type = type
+    this.id = type
+    this.type = Object.values(ErrorType)[type] as string
+    this.message = i18n.__(`errors.${this.type}`)
   }
 }
 
