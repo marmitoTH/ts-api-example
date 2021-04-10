@@ -1,3 +1,18 @@
-.vscode
-node_modules
+# Dependencies
+node_modules/
+
+# Output directories
+out/
+build/
+
+# Editor settings
+.vscode/
+
+# Environment files
 .env
+
+# Databases
+*.db
+*.database
+*.sqlite
+*.sqlite3
