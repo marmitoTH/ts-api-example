@@ -6,8 +6,10 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 
+import DomainUser from '@domain/User'
+
 @Entity('users')
-class User {
+class User extends DomainUser {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string
 
@@ -24,10 +26,10 @@ class User {
   password: string
 
   @CreateDateColumn({ name: 'created_at' })
-  readonly createdAt: string
+  readonly createdAt: Date
 
   @UpdateDateColumn({ name: 'updated_at' })
-  readonly updatedAt: string
+  readonly updatedAt: Date
 }
 
 export default User
